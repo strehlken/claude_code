@@ -42,6 +42,17 @@
   .hud-item { display: flex; flex-direction: column; gap: 2px; }
   .hud-label { color: #666; font-size: 6px; }
   .hud-value { color: #ffff00; }
+  #btn-reset {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 6px;
+    padding: 4px 10px;
+    border: 1px solid #ff4444;
+    background: transparent;
+    color: #ff4444;
+    cursor: pointer;
+    align-self: center;
+  }
+  #btn-reset:hover { background: rgba(255,68,68,0.15); }
 
   #canvas-wrap {
     flex: 1;
@@ -151,6 +162,7 @@
     <div class="hud-item"><span class="hud-label">ROUND</span><span class="hud-value" id="hud-round" style="color:#00ffde">1/10</span></div>
     <div class="hud-item"><span class="hud-label">REPUTATION</span><span class="hud-value" id="hud-rep" style="color:#00ff00">UNKNOWN</span></div>
     <div class="hud-item"><span class="hud-label">SUSPECT</span><span class="hud-value" id="hud-opponent">???</span></div>
+    <button id="btn-reset" onclick="resetGame()">RESET</button>
   </div>
 
   <div id="canvas-wrap"><canvas id="game-canvas"></canvas></div>
@@ -596,6 +608,14 @@ function endGame() {
 }
 
 function restartGame() {
+  document.getElementById('game-over').style.display = 'none';
+  initGame();
+}
+
+function resetGame() {
+  if (state === 'title') return;
+  clearTimeout(window._timer);
+  if (window._resolve) { window._resolve(); window._resolve = null; }
   document.getElementById('game-over').style.display = 'none';
   initGame();
 }
